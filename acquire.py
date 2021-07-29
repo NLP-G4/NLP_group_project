@@ -20,7 +20,126 @@ from env import github_token, github_username
 # TODO: Add your github username to your env.py file under the variable `github_username`
 # TODO: Add more repositories to the `REPOS` list below.
 
-REPOS = []
+REPOS = ['/awesome-selfhosted/awesome-selfhosted',
+ '/jaywcjlove/awesome-mac',
+ '/goabstract/Awesome-Design-Tools',
+ '/viatsko/awesome-vscode',
+ '/ascoders/weekly',
+ '/davidsonfellipe/awesome-wpo',
+ '/shekhargulati/52-technologies-in-2016',
+ '/hackerkid/Mind-Expanding-Books',
+ '/apsdehal/awesome-ctf',
+ '/imfunniee/gitfolio',
+ '/Kristories/awesome-guidelines',
+ '/swapagarwal/swag-for-dev',
+ '/cezaraugusto/You-Dont-Know-JS',
+ '/stackshareio/awesome-stacks',
+ '/vitejs/awesome-vite',
+ '/jdorfman/awesome-json-datasets',
+ '/huyingjie/Checklist-Checklist',
+ '/stefanbuck/awesome-browser-extensions-for-github',
+ '/wubaiqing/zaobao',
+ '/f2e-awesome/knowledge',
+ '/soroushchehresa/awesome-coronavirus',
+ '/t9tio/open-source-jobs',
+ '/metrofun/machine-learning-surveys',
+ '/yangshun/awesome-spinners',
+ '/junosuarez/awesome-npx',
+ '/sergey-pimenov/awesome-web-animation',
+ '/philsturgeon/awesome-earth',
+ '/diegohaz/awesome-react-context',
+ '/ElaWorkshop/awesome-cn-cafe',
+ '/jagracey/Awesome-Unicode',
+ '/vinta/awesome-python',
+ '/521xueweihan/HelloGitHub',
+ '/lauris/awesome-scala',
+ '/lk-geimfari/awesomo',
+ '/wilsonfreitas/awesome-quant',
+ '/PaddlePaddle/PaddleHub',
+ '/detailyang/awesome-cheatsheet',
+ '/chrissimpkins/codeface',
+ '/ml-tooling/best-of-ml-python',
+ '/paralax/awesome-honeypots',
+ '/likedan/Awesome-CoreML-Models',
+ '/yzhao062/anomaly-detection-resources',
+ '/rossant/awesome-math',
+ '/0xInfection/Awesome-WAF',
+ '/INTERMT/Awesome-PyTorch-Chinese',
+ '/dahlia/awesome-sqlalchemy',
+ '/Separius/awesome-sentence-embedding',
+ '/xxh/xxh',
+ '/fendouai/Awesome-Chatbot',
+ '/ml-tooling/best-of-python',
+ '/wxWidgets/Phoenix',
+ '/kaxap/arl',
+ '/springload/awesome-wagtail',
+ '/ml-tooling/best-of-web-python',
+ '/fendouai/Awesome-TensorFlow-Chinese',
+ '/anmol098/waka-readme-stats',
+ '/ucg8j/awesome-dash',
+ '/mhxion/awesome-discord-communities',
+ '/florimondmanca/awesome-asgi',
+ '/applicable-ml/awesome-ml-demos-with-ios',
+ '/docker/awesome-compose',
+ '/terkelg/awesome-creative-coding',
+ '/PatrickJS/awesome-angular',
+ '/webpack-contrib/awesome-webpack',
+ '/ipfs/awesome-ipfs',
+ '/samber/awesome-prometheus-alerts',
+ '/krishnakumarsekar/awesome-quantum-machine-learning',
+ '/hookmaster/frida-all-in-one',
+ '/kujian/frontendDaily',
+ '/lyfeyaj/awesome-resources',
+ '/EliotAndres/kaggle-past-solutions',
+ '/rootsongjc/awesome-cloud-native',
+ '/zhengxiaopeng/android-dev-bookmarks',
+ '/ITI/ICS-Security-Tools',
+ '/liyupi/free-programming-resources',
+ '/geek-cookbook/geek-cookbook',
+ '/theNewDynamic/awesome-hugo',
+ '/acgeospatial/awesome-earthobservation-code',
+ '/krzemienski/awesome-video',
+ '/awesome-br/awesome-br.github.io',
+ '/aliesbelik/awesome-jmeter',
+ '/unchase/awesome-russian-it',
+ '/wardley-maps-community/awesome-wardley-maps',
+ '/csinva/csinva.github.io',
+ '/ligurio/awesome-ttygames',
+ '/posquit0/hugo-awesome-identity',
+ '/ayr-ton/awesome-geek-podcasts',
+ '/overnote/awesome-kubernetes-notes',
+ '/faridrashidi/kaggle-solutions',
+ '/planetruby/conferences',
+ '/sindresorhus/awesome',
+ '/papers-we-love/papers-we-love',
+ '/unixorn/awesome-zsh-plugins',
+ '/thibmaek/awesome-raspberry-pi',
+ '/k4m4/movies-for-hackers',
+ '/skywind3000/awesome-cheatsheets',
+ '/ashishb/android-security-awesome',
+ '/awesome-lists/awesome-bash',
+ '/frenck/awesome-home-assistant',
+ '/chubin/awesome-console-services',
+ '/jghoman/awesome-apache-airflow',
+ '/zudochkin/awesome-newsletters',
+ '/aviaryan/awesome-no-login-web-apps',
+ '/ashishb/osx-and-ios-security-awesome',
+ '/CompSciLauren/awesome-git-hooks',
+ '/RichardLitt/awesome-styleguides',
+ '/jeffreytse/zsh-vi-mode',
+ '/sroberts/awesome-iocs',
+ '/aitemr/awesome-git-hooks',
+ '/jhermann/awesome-python-talks',
+ '/dennyzhang/cheatsheet.dennyzhang.com',
+ '/makccr/dot',
+ '/calee0219/awesome-5g',
+ '/MorganGeek/bookmarks',
+ '/HongxuChen/awesome-llvm',
+ '/buren/awesome-sweden',
+ '/jeffreytse/jekyll-deploy-action',
+ '/tajmone/awesome-interactive-fiction',
+ '/stve/awesome-dropwizard',
+ '/opensourcecities/montreal']
  
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
@@ -32,6 +151,7 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
+    print(url)
     response = requests.get(url, headers=headers)
     response_data = response.json()
     if response.status_code != 200:
@@ -43,7 +163,7 @@ def github_api_request(url: str) -> Union[List, Dict]:
 
 
 def get_repo_language(repo: str) -> str:
-    url = f"https://api.github.com/repos/{repo}"
+    url = f"https://api.github.com/repos{repo}"
     repo_info = github_api_request(url)
     if type(repo_info) is dict:
         repo_info = cast(Dict, repo_info)
@@ -54,7 +174,7 @@ def get_repo_language(repo: str) -> str:
 
 
 def get_repo_contents(repo: str) -> List[Dict[str, str]]:
-    url = f"https://api.github.com/repos/{repo}/contents/"
+    url = f"https://api.github.com/repos{repo}/contents/"
     contents = github_api_request(url)
     if type(contents) is list:
         contents = cast(List, contents)
