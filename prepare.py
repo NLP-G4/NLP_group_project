@@ -9,6 +9,7 @@ import re
 import nltk
 from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
+from markdown import markdown
 
 def basic_clean(string):
     '''
