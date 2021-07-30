@@ -30,8 +30,28 @@ def basic_clean(string):
     
     # remove anything that is not a through z, a number, a single quote, or whitespace
     string = re.sub(r'[^\w\s]', '', string)
-    
     return string
+
+def remove_html(value):
+    ''' Takes in one cell of a dataframe and returns it with html and markdown removed.'''
+    # uses markdown to take in the value
+    html = markdown(value)
+    # remove html/markdown tags
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)
+    # make it into readable text with beautifulSoup
+    soup = BeautifulSoup(html, "html.parser")
+    # use the soup to find only the text
+    text = ''.join(soup.findAll(text=True))
+    # replace linebreaks
+    text = text.strip().replace('\n', ' ')
+    return text
+
+def remove_all_html(df):
+    #Apply remove_html to each cell in the column. Maybe iterate? Need to figure out how to use .loc for it
+    # Then we need to replace each value in the cell with markdown removed
+    # return the cleaned df.
+    return df
 
 def tokenize(string):
     '''
