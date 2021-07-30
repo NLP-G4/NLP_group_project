@@ -10,6 +10,7 @@ import os
 import json
 from typing import Dict, List, Optional, Union, cast
 import requests
+import pandas as pd
 
 from env import github_token, github_username
 
@@ -151,7 +152,6 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
-    print(url)
     response = requests.get(url, headers=headers)
     response_data = response.json()
     if response.status_code != 200:
@@ -219,3 +219,16 @@ def scrape_github_data() -> List[Dict[str, str]]:
 if __name__ == "__main__":
     data = scrape_github_data()
     json.dump(data, open("data2.json", "w"), indent=1)
+    
+def get_github_data(cached=False):
+    '''
+    reads in github data and caches if it hasnt been already. 
+    '''
+    filename = 'github_readme.csv'
+    if cached == False or os.path.isfile(filename) == False:
+        df = pd.DataFrame(scrape_github_data())
+        df.to_csv(filename)
+    else:
+        df = pd.read_csv(filename, index_col = 0)
+
+    return df
