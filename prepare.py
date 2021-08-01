@@ -135,20 +135,26 @@ def prep_article_data(df, column, extra_words=[], exclude_words=[]):
     returns a df with the text article title, original text, stemmed text,
     lemmatized text, cleaned, tokenized, & lemmatized text with stopwords removed.
     '''
-    df[f'cleaned_{column}'] = df[column].copy().apply(basic_clean)\
+    df[f'cleaned_{column}'] = df[column].copy()\
+                            .apply(remove_html)\
+                            .apply(basic_clean)\
                             .apply(tokenize)\
                             .apply(remove_stopwords, 
                                    extra_words=extra_words, 
                                    exclude_words=exclude_words)
     
-    df[f'stemmed_{column}'] = df[column].copy().apply(basic_clean)\
+    df[f'stemmed_{column}'] = df[column].copy()\
+                            .apply(remove_html)\
+                            .apply(basic_clean)\
                             .apply(tokenize)\
                             .apply(stem)\
                             .apply(remove_stopwords, 
                                    extra_words=extra_words, 
                                    exclude_words=exclude_words)
     
-    df[f'lemmatized_{column}'] = df[column].copy().apply(basic_clean)\
+    df[f'lemmatized_{column}'] = df[column].copy()\
+                            .apply(remove_html)\
+                            .apply(basic_clean)\
                             .apply(tokenize)\
                             .apply(lemmatize)\
                             .apply(remove_stopwords, 
