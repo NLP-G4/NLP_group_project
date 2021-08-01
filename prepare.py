@@ -69,6 +69,17 @@ def tokenize(string):
     
     return string
 
+def re_tokenize(string):
+    '''uses regex expression to tokenize string, ignore any non-alpha/numeric strings'''
+    tokenizer = RegexpTokenizer('\w+')
+
+    # use tokenizer
+    string = tokenizer.tokenize(string)
+
+    string = ' '.join(string)
+
+    return string
+
 def stem(string):
     '''
     This function will take in a single string, perform a PorterStemmer, and return the stemmed string.
@@ -129,7 +140,7 @@ def remove_stopwords(string, extra_words=[], exclude_words=[]):
     return string_without_stopwords
 
 
-def prep_article_data(df, column, extra_words=[], exclude_words=[]):
+def prep_article_data(df, column, tokenizer, extra_words=[], exclude_words=[]):
     '''
     This function take in a df and the string name for a text column with 
     option to pass lists for extra_words and exclude_words and
@@ -139,7 +150,7 @@ def prep_article_data(df, column, extra_words=[], exclude_words=[]):
     df[f'cleaned_{column}'] = df[column].copy()\
                             .apply(remove_html)\
                             .apply(basic_clean)\
-                            .apply(tokenize)\
+                            .apply(tokenizer)\
                             .apply(remove_stopwords, 
                                    extra_words=extra_words, 
                                    exclude_words=exclude_words)
@@ -147,7 +158,7 @@ def prep_article_data(df, column, extra_words=[], exclude_words=[]):
     df[f'stemmed_{column}'] = df[column].copy()\
                             .apply(remove_html)\
                             .apply(basic_clean)\
-                            .apply(tokenize)\
+                            .apply(tokenizer)\
                             .apply(stem)\
                             .apply(remove_stopwords, 
                                    extra_words=extra_words, 
@@ -156,7 +167,7 @@ def prep_article_data(df, column, extra_words=[], exclude_words=[]):
     df[f'lemmatized_{column}'] = df[column].copy()\
                             .apply(remove_html)\
                             .apply(basic_clean)\
-                            .apply(tokenize)\
+                            .apply(tokenizer)\
                             .apply(lemmatize)\
                             .apply(remove_stopwords, 
                                    extra_words=extra_words, 
