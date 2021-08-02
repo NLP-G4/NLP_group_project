@@ -139,6 +139,15 @@ def remove_stopwords(string, extra_words=[], exclude_words=[]):
     
     return string_without_stopwords
 
+def drop_foreign_language(df):
+    '''
+    This function takes in a pandas DataFrame, along with an index list of observations to drop.
+    It returns a pandas DataFrame with foreign language files removed.
+    '''
+    df = df.drop(labels=[1,4,12,18,19,28,31,44,54,67,68,72,74,79,81,87,95], axis=0)
+    
+    return df
+
 
 def prep_article_data(df, column, tokenizer, extra_words=[], exclude_words=[]):
     '''
@@ -147,6 +156,10 @@ def prep_article_data(df, column, tokenizer, extra_words=[], exclude_words=[]):
     returns a df with the text article title, original text, stemmed text,
     lemmatized text, cleaned, tokenized, & lemmatized text with stopwords removed.
     '''
+    df = df.dropna()
+    
+    df = drop_foreign_language(df)
+    
     df[f'cleaned_{column}'] = df[column].copy()\
                             .apply(remove_html)\
                             .apply(basic_clean)\
