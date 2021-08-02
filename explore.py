@@ -32,7 +32,7 @@ def word_count_word_cloud(series_list, title_names, n = 1, x=10, title_name = No
         # plot bigrams on left subplot
         plt.subplot(1, 2, 1)
         ngrams.sort_values(ascending = True).plot.barh(color = '#29af7f', alpha = .7, width = .9)
-        plt.title(f'Top {x} {n} ngrams: {title_names[i]}')
+        plt.title(f'Top {x}: {n}_ngrams: {title_names[i]}')
 
         # create dictionary of words from the bigrams
         data = {k[0] : v for k, v in ngrams.to_dict().items()}
