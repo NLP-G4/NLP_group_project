@@ -11,6 +11,7 @@ from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
 from markdown import markdown
 from sklearn.model_selection import train_test_split
+from nltk.tokenize import RegexpTokenizer
 
 def basic_clean(string):
     '''
