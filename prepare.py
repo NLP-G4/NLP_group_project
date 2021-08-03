@@ -51,12 +51,6 @@ def remove_html(value):
     text = text.strip().replace('\n', ' ')
     return text
 
-def remove_all_html(df):
-    #Apply remove_html to each cell in the column. Maybe iterate? Need to figure out how to use .loc for it
-    # Then we need to replace each value in the cell with markdown removed
-    # return the cleaned df.
-    return df
-
 def tokenize(string):
     '''
     This function takes in the result of my basic_clean function (a single, cleaned string) and tokenizes all the words in the string.
