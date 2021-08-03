@@ -60,7 +60,7 @@ Plan -> Data Acquisition -> Data Prep -> Exploratory Analysis -> ML Models -> De
 - [] Document conclusions, takeaways, and next steps in the Final Report Notebook.
 ​
 ### Data Acquistion
-= [x] Identify 120 target GitHub repositories; 30 for each of our selected languages. 
+- [x] Identify 120 target GitHub repositories; 30 for each of our selected languages. 
 - [x] Scrape readme.md contents from each of our selected GitHub repositiory and create a series of functions to automate this process. Save the functions in an acquire.py file to import into the Final Report Notebook.
 - [x] The final function will return a pandas DataFrame.
 - [x] Import the acquire function from the acquire.py module and use it to acquire the data in the Final Report Notebook.
@@ -88,7 +88,7 @@ Plan -> Data Acquisition -> Data Prep -> Exploratory Analysis -> ML Models -> De
 - [x] Compare evaluation metrics across all models and evaluate using our validate sets.
 - [x] Feature Selection (after initial iteration through pipeline): Are there any variables that seem to provide limited to no additional information?  Are there any alternative feature selection processes that could 
 - [x] Based on the evaluation of the models using the train and validate datasets, choose the best model to try with the test data, once.
-- [] Test the final model on the out-of-sample data (the testing dataset), summarize the performance, interpret and document the results.
+- [x] Test the final model on the out-of-sample data (the testing dataset), summarize the performance, interpret and document the results.
 ​
 ### Delivery
 > - Introduce ourselves and our project goals at the very beginning of my notebook walkthrough.
@@ -106,3 +106,10 @@ Plan -> Data Acquisition -> Data Prep -> Exploratory Analysis -> ML Models -> De
     > - prepare.py 
     > - explore.py
     > - run the final_report.ipynb notebook
+> - Libraries requiring install:
+    > - Markdown
+    > - BeautifulSoup
+    > - Pandas
+    > - Scikit-Learn
+    > - NLTK
+    > - 
