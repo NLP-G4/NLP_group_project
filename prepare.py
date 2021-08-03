@@ -11,7 +11,11 @@ from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
 from markdown import markdown
 from sklearn.model_selection import train_test_split
+
+import pandas as pd
+
 from nltk.tokenize import RegexpTokenizer
+
 
 def basic_clean(string):
     '''
@@ -140,45 +144,115 @@ def remove_stopwords(string, extra_words=[], exclude_words=[]):
     
     return string_without_stopwords
 
+def drop_foreign_language(df):
+    '''
+    This function takes in a pandas DataFrame, along with an index list of observations to drop.
+    It returns a pandas DataFrame with foreign language files removed.
+    '''
+    df = df.drop(labels=[1,4,12,18,19,28,31,44,54,67,68,72,74,79,81,87,95], axis=0)
+    
+    return df
 
-def prep_article_data(df, column, tokenizer = tokenize, extra_words=[], exclude_words=[]):
+
+def initial_repo_prep(df, column, tokenizer=tokenize, extra_words=[], exclude_words=[]):
     '''
     This function take in a df and the string name for a text column with 
     option to pass lists for extra_words and exclude_words and
     returns a df with the text article title, original text, stemmed text,
     lemmatized text, cleaned, tokenized, & lemmatized text with stopwords removed.
     '''
-    df = df.drop(labels = [1,4,12,18,19,28,31,44,54,67,68,72,74,79,81,87,95], axis=0)
-    
-    df = df.dropna()
-    
-    df[f'cleaned_{column}'] = df[column].copy()\
-                            .apply(remove_html)\
-                            .apply(basic_clean)\
-                            .apply(tokenizer)\
-                            .apply(remove_stopwords, 
-                                   extra_words=extra_words, 
-                                   exclude_words=exclude_words)
-    
-    df[f'stemmed_{column}'] = df[column].copy()\
-                            .apply(remove_html)\
-                            .apply(basic_clean)\
-                            .apply(tokenizer)\
-                            .apply(stem)\
-                            .apply(remove_stopwords, 
-                                   extra_words=extra_words, 
-                                   exclude_words=exclude_words)
-    
-    df[f'lemmatized_{column}'] = df[column].copy()\
-                            .apply(remove_html)\
-                            .apply(basic_clean)\
-                            .apply(tokenizer)\
-                            .apply(lemmatize)\
-                            .apply(remove_stopwords, 
-                                   extra_words=extra_words, 
-                                   exclude_words=exclude_words)
+    if os.path.isfile('initial_prep.csv'):
+        # If csv file exists read in data from csv file.
+        df = pd.read_csv('initial_prep.csv', index_col=0)
+        
+    else:
+        # Read fresh data from db into a DataFrame
+
+        df = df.dropna()
+
+        df = drop_foreign_language(df)
+
+        df[f'cleaned_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        df[f'stemmed_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(stem)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        df[f'lemmatized_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(lemmatize)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        # Cache data
+        df.to_csv('initial_prep.csv')
     
     return df
+
+def second_repo_prep(df, column, tokenizer=tokenize, extra_words=[], exclude_words=[]):
+    '''
+    This function take in a df and the string name for a text column with 
+    option to pass lists for extra_words and exclude_words and
+    returns a df with the text article title, original text, stemmed text,
+    lemmatized text, cleaned, tokenized, & lemmatized text with stopwords removed.
+    '''
+    if os.path.isfile('second_prep.csv'):
+        # If csv file exists read in data from csv file.
+        df = pd.read_csv('second_prep.csv', index_col=0)
+        
+    else:
+        # Read fresh data from db into a DataFrame
+
+        df = df.dropna()
+
+        df = drop_foreign_language(df)
+
+        df[f'cleaned_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        df[f'stemmed_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(stem)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        df[f'lemmatized_{column}'] = df[column].copy()\
+                                .apply(remove_html)\
+                                .apply(basic_clean)\
+                                .apply(tokenizer)\
+                                .apply(lemmatize)\
+                                .apply(remove_stopwords, 
+                                       extra_words=extra_words, 
+                                       exclude_words=exclude_words)
+
+        # Cache data
+        df.to_csv('second_prep.csv')
+    
+    return df
+
+
 
 def train_validate_test_split(df, target, seed=123):
     '''
@@ -195,6 +269,7 @@ def train_validate_test_split(df, target, seed=123):
     train, validate = train_test_split(train_validate, test_size=0.3, 
                                        random_state=seed,
                                        stratify=train_validate[target])
+
     return train, validate, test
 
 def idf(word):
@@ -237,3 +312,4 @@ def IDF_stop(df):
     stop_words = dfx[dfx.idf<2]
     
     return stop_words
+
