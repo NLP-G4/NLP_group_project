@@ -15,13 +15,12 @@ def random_color_func(word=None, font_size=None, position=None,  orientation=Non
 
 
 
-def word_count_word_cloud(series_list, title_names, n = 1, x=10, title_name = None):
+def word_count_word_cloud(series_list, title_names, n = 1, x=10):
     '''
     This function takes in a words_list
-    Creates bigrams
     Plots the counts on a bar chart and a wordcloud 
     Optional arguements to change customization
-    - top_num: default 20, shows most common number of bigrams
+    - x: default 10, shows most common number of words
     '''
     for i in range (0, len(series_list)):
     
@@ -55,13 +54,13 @@ def word_count_word_cloud(series_list, title_names, n = 1, x=10, title_name = No
         plt.title("Word Cloud", font = 'Arial', fontsize= 20)
         plt.show()
         
-def bigram_word_cloud(series_list, title_names, n = 1, x=10, title_name = None):
+def bigram_word_cloud(series_list, title_names, n = 1, x=10):
     '''
     This function takes in a words_list
     Creates bigrams
     Plots the counts on a bar chart and a wordcloud 
     Optional arguements to change customization
-    - top_num: default 20, shows most common number of bigrams
+    - x: default 10, shows most common number of bigrams
     '''
     for i in range (0, len(series_list)):
     
@@ -95,13 +94,13 @@ def bigram_word_cloud(series_list, title_names, n = 1, x=10, title_name = None):
         plt.title("Word Cloud", font = 'Arial', fontsize= 20)
         plt.show()
         
-def trigram_word_cloud(series_list, title_names, n = 1, x=10, title_name = None):
+def trigram_word_cloud(series_list, title_names, n = 1, x=10):
     '''
     This function takes in a words_list
-    Creates bigrams
+    Creates trigrams
     Plots the counts on a bar chart and a wordcloud 
     Optional arguements to change customization
-    - top_num: default 20, shows most common number of bigrams
+    - x: default 10, shows most common number of bigrams
     '''
     for i in range (0, len(series_list)):
     
