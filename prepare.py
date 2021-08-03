@@ -12,7 +12,6 @@ from nltk.corpus import stopwords
 from markdown import markdown
 from sklearn.model_selection import train_test_split
 from nltk.tokenize import RegexpTokenizer
-import pandas as pd
 
 def basic_clean(string):
     '''
@@ -198,3 +197,43 @@ def train_validate_test_split(df, target, seed=123):
                                        stratify=train_validate[target])
     return train, validate, test
 
+def idf(word):
+    '''for use in calculating stop words'''
+    n_occurences = sum([1 for doc in documents.values() if word in doc])
+    return len(documents) / n_occurences
+
+def IDF_stop(df):
+    '''separates df by language, creates strings out of lemmatized_readme_contents, calculates IDF scores from string and produces a stop list of all words with an IDF score of less than 2 '''
+    # separate df by languages
+    java = df[df.language=='JavaScript']
+    python = df[df.language=='Python']
+    HTML = df[df.language=='HTML']
+    shell = df[df.language=='Shell']#def remove_all_html(df):
+    
+    # create strings out of each language df
+    all_words = ' '.join(repo_clean.lemmatized_readme_contents)
+    java_words = ' '.join(java.lemmatized_readme_contents)
+    python_words = ' '.join(python.lemmatized_readme_contents)
+    HTML_words = ' '.join(HTML.lemmatized_readme_contents)
+    shell_words = ' '.join(shell.lemmatized_readme_contents)
+    
+    # create a dictionary of these strings
+    documents = {'java': java_words,
+            'python': python_words,
+            'HTML': HTML_words,
+            'shell': shell_words}
+
+    # Get a list of the unique words
+    unique_words = pd.Series(' '.join(documents.values()).split()).unique()
+
+    # put the unique words into a data frame
+    dfx = (pd.DataFrame(dict(word=unique_words))
+    # calculate the idf for each word
+    .assign(idf=lambda df: df.word.apply(idf))
+    # sort the data for presentation purposes
+    .set_index('word')
+    .sort_values(by='idf', ascending=True))
+
+    stop_words = dfx[dfx.idf<2]
+    
+    return stop_words
