@@ -6,7 +6,9 @@ import nltk
 from wordcloud import WordCloud
 
 def random_color_func(word=None, font_size=None, position=None,  orientation=None, font_path=None, random_state=None):
+    '''Takes in the HSL codes for color. (use google color picker). Sets the hue, saturation, and intensity for the wordcloud to colorize with.'''
     h = 140
+    # converts a typical 
     s = int(100.0 * 255.0 / 255.0)
     l = int(100.0 * float(random_state.randint(80, 200)) / 255.0)
     return "hsl({}, {}%, {}%)".format(h, s, l)
