@@ -98,6 +98,22 @@ Plan -> Data Acquisition -> Data Prep -> Exploratory Analysis -> ML Models -> De
 
 ## Conclusions & Next Steps
 
+- All models passed the baseline on the validate split, except for the Random Forest Classifier
+- All models are overfit
+- K-Nearest Neighbors performed the best, outperforming the baseline by 31.43%
+    - Model efficacy could be improved by increasing the amount of readmes in the dataset
+    - Readme length also greatly varied across languages which creates a psuedo-class imbalance. Finding a method to scale readme length would help reduce overfitting
+    - Further hyper-parameter tuning and feature engineering could help generalize the model better
+- Most were pretty imbalanced when predicting all four languages, but K-Nearest Neighbors predicted all but shell somewhat equally
+- For these reasons, we chose to test our KNN model
+    - The model outperformed the baseline by 15% and was not too lopsided in predicting each language
+    - The model performed very well in predicting HTML code
+    - Performs the worst with Shell
+    - More data is needed to increase K and reduce overfitting
+- With More Time:
+    - All models would benefit greatly from an increased sample size
+    - We found that distance-based models outperformed decision-based models, and would like to continue adjusting hyperparameters
+    - We would also like to look into clustering, and combining models to increase accuracy
 
 ## How to Reproduce this Project
 > - You will need your own env file with credentials for the GitHub, along with these files to recreate our project:
@@ -106,10 +122,10 @@ Plan -> Data Acquisition -> Data Prep -> Exploratory Analysis -> ML Models -> De
     > - prepare.py 
     > - explore.py
     > - run the final_report.ipynb notebook
+    
 > - Libraries requiring install:
     > - Markdown
     > - BeautifulSoup
     > - Pandas
     > - Scikit-Learn
     > - NLTK
-    > - 
