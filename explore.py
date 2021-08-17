@@ -51,7 +51,7 @@ def word_count_word_cloud(series_list, title_names, n = 1, x=10):
         # show image
         plt.imshow(img)
         plt.axis('off')
-        plt.title("Word Cloud", font = 'Arial', fontsize= 20)
+        plt.title(f'{title_names[i]}', font = 'Arial', fontsize= 20)
         plt.show()
         
 def bigram_word_cloud(series_list, title_names, n = 1, x=10):
@@ -91,7 +91,7 @@ def bigram_word_cloud(series_list, title_names, n = 1, x=10):
         # show image
         plt.imshow(img)
         plt.axis('off')
-        plt.title("Word Cloud", font = 'Arial', fontsize= 20)
+        plt.title(f'{title_names[i]}', font = 'Arial', fontsize= 20)
         plt.show()
         
 def trigram_word_cloud(series_list, title_names, n = 1, x=10):
@@ -131,7 +131,7 @@ def trigram_word_cloud(series_list, title_names, n = 1, x=10):
         # show image
         plt.imshow(img)
         plt.axis('off')
-        plt.title("Word Cloud", font = 'Arial', fontsize= 20)
+        plt.title(f'{title_names[i]}', font = 'Arial', fontsize= 20)
         plt.show()
 
 
